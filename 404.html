@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <!-- multi-device width -->
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <!-- site description -->
+
+    <meta content="" name="description"/>
+    <!-- referer for 3rd-part images-->
+    <meta content="no-referrer" name="referrer"/>
+    <!-- title -->
+    <title>
+        Matrix Warning
+    </title>
+    <!-- icon -->
+    <link href="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=673088307,3525619301&fm=26&gp=0.jpg" rel="shortcut icon bookmark"
+          type="image/x-icon"/>
+    <style>
+        .page {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            position: fixed;
+            text-align: center;
+            line-height: 1.2;
+            background-color: black;
+            background-image: none;
+            font-size: 18.5px;
+            color: #34a507;
+            font-family: "Fira Code Regular", "Source Code Pro", "Fira Code", "Source-Han-Sans-Medium", "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", Helvetica, Tahoma, Arial, sans-serif;
+        }
+
+        .page .div_bg {
+            top: -4px;
+            height: 100%;
+            width: 100% !important;
+            text-align: left;
+            position: absolute;
+        }
+    </style>
+</head>
+<body class="page">
+<div class="div_bg">
+    <canvas id="c"></canvas>
+</div>
+<script>
+    var c = document.getElementById("c");
+    var ctx = c.getContext("2d");
+    c.height = window.screen.height;
+    c.width = window.screen.width;
+    var txts = "αβγδεζηθικλμνξοπρστυφχψω∷∫∮∝∞∧∨∑∏∪∩∈∵∴⊥‖∠⌒⊙≌√";
+    txts = txts.split("");
+    var font_size = 12;
+    var columns = c.width / font_size;
+    var drops = [];
+    for (var x = 0; x < columns; x++) drops[x] = 1;
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, c.width, c.height);
+        ctx.fillStyle = "#490";
+        ctx.font = font_size + "px arial";
+        for (var i = 0; i < drops.length; i++) {
+            var text = txts[Math.floor(Math.random() * txts.length)];
+            ctx.fillText(text, i * font_size, drops[i] * font_size);
+            if (drops[i] * font_size > c.height || Math.random() > 0.98) drops[i] = 0;
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 20);
+</script>
+</body>
+</html>
