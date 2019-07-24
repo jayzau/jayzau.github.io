@@ -46,6 +46,18 @@
     <canvas id="c"></canvas>
 </div>
 <script>
+    window.onload = function(){
+		var time = 3;
+		var timer = setInterval(function(){
+			time--;
+			if(!time){
+				clearInterval(timer);
+				location.href="/";
+			}
+
+		},1000);
+	};
+
     var c = document.getElementById("c");
     var ctx = c.getContext("2d");
     c.height = window.screen.height;
