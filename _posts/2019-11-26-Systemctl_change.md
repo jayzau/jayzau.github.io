@@ -75,4 +75,13 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub user@host
 推荐搭配`alias`食用（自定义快捷命令）。例如常用命令`ll`实际上是定义了`alias ll='ls -l --color=auto'`，
 取消自定义命令`unalias ll`。或直接写入`~/.bashrc`后刷新`source ~/.bashrc`。
 
+---
+一分钟后：
 
+提交了主页居然不显示绿点，这尼玛谁能忍啊，哎，还是怪自己手贱填了一个不常用的邮箱。。。
+
+```shell script
+git config --global user.email 'github设置的email'
+```
+
+解决！
