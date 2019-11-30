@@ -33,3 +33,9 @@ tags: 博客
 ![](/images/posts/Chrome_tools/cqc1.png)
 
 反过来，我们只需要将对应的css样式调整一下就ok。
+
+![](/images/posts/Chrome_tools/cqc2.png)
+
+最后利用油猴脚本，解放双手～
+
+![](/images/posts/Chrome_tools/cqc3.png)
