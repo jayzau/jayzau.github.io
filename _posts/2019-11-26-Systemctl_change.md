@@ -11,21 +11,25 @@ tags: 博客
 
 不过说，啥系统都有个毛病，自带源速度都太慢，还是得换成[清华](https://mirror.tuna.tsinghua.edu.cn/help/debian/)或者
 [阿里](https://developer.aliyun.com/mirror)之类的源。
+
 ```shell script
 vim /etc/apt/sources.list
 
 sudo apt-get update
 ```
+
 为啥说Deepin更友好呢，因为日常使用的玩意儿大多数应用商店里面都有了，Windows还得去软件官网呢，这儿直接给你整一堆了，下载安装一键完成，
 要多爽有多爽。
 
 上面说的其实也就针对下QQ和微信（之前在Ubuntu上又要整Wine又要找包，完事儿还有很多Bug只能勉强使用），某些软件个人还是喜欢自己下包安装。
 
 比如Anaconda，官网一条龙服务，完事儿换个[源](https://mirror.tuna.tsinghua.edu.cn/help/pypi/)，美滋滋。
+
 ```shell script
 vim ~/.condarc
 vim ~/.pip/pip.conf
 ```
+
 ```text
 # conda:
 channels:
@@ -47,9 +51,11 @@ custom_channels:
 [global]
 index-url = https://pypi.tuna.tsinghua.edu.cn/simple
 ```
+
 环境是搭好了，自个儿下载的软件还得整个桌面图标，或者你愿意次次用命令行起也行。
 
 举个栗子 `Pycharm.desktop`:
+
 ```text
 [Desktop Entry]
 Encoding=UTF-8
