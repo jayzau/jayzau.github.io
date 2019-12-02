@@ -32,10 +32,12 @@ tags: 博客
 
 ![](/images/posts/Chrome_tools/cqc1.png)
 
-反过来，我们只需要将对应的css样式调整一下就ok。
+反过来，我们只需要将对应的css样式调整一下就ok。至于如何调整，可以尝试找找看，正常途径是如何解除隐藏的。
 
 ![](/images/posts/Chrome_tools/cqc2.png)
 
-最后利用油猴脚本，解放双手～
+最后利用油猴脚本，实现每次访问网页的时候自动执行脚本，来达到我们的目的。
 
 ![](/images/posts/Chrome_tools/cqc3.png)
+
+就可以随意访问了～油猴插件在谷歌商店搜索`Tampermonkey`就OK。
