@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ssh脚本操作远程服务器
+title: shell脚本操作远程服务器
 date: 2019-12-04
 tags: 博客   
 ---
