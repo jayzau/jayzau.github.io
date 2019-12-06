@@ -12,7 +12,7 @@ tags: 博客
 不过说，啥系统都有个毛病，自带源速度都太慢，还是得换成[清华](https://mirror.tuna.tsinghua.edu.cn/help/debian/)或者
 [阿里](https://developer.aliyun.com/mirror)之类的源。
 
-```shell script
+```shell
 vim /etc/apt/sources.list
 
 sudo apt-get update
@@ -25,7 +25,7 @@ sudo apt-get update
 
 比如Anaconda，官网一条龙服务，完事儿换个[源](https://mirror.tuna.tsinghua.edu.cn/help/pypi/)，美滋滋。
 
-```shell script
+```shell
 vim ~/.condarc
 vim ~/.pip/pip.conf
 ```
@@ -69,7 +69,7 @@ X-Deepin-Vendor=user-custom
 
 工具都齐了，为了搞事情方便，`ssh`得用起来，这也是个人选用Linux的原因之一。自带终端太丑，强烈推荐贼好用的`Yakuake`+`Konsole`。
 
-```shell script
+```shell
 # 生成
 ssh-keygen -t rsa
 # 查看
@@ -86,7 +86,7 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub user@host
 
 提交了主页居然不显示绿点，这尼玛谁能忍啊，哎，还是怪自己手贱填了一个不常用的邮箱。。。
 
-```shell script
+```shell
 git config --global user.email 'github设置的email'
 ```
 
