@@ -20,16 +20,19 @@ tags: 博客
 #### 利用Docker安装Nginx
 
 搜索版本
+
 ```shell script
 docker search nginx
 ```
 
 下载镜像
+
 ```shell script
 docker pull nginx:latest
 ```
 
 创建容器并运行
+
 ```shell script
 docker run --name mynginx -p 8080:80  -v /etc/nginx/nginx.conf:/etc/nginx/nginx.conf  -v /etc/nginx/log:/var/log/nginx -d  --restart=always docker.io/nginx
 ```
@@ -48,16 +51,21 @@ docker run --name mynginx -p 8080:80  -v /etc/nginx/nginx.conf:/etc/nginx/nginx.
 #### 第一步：找到Docker对应的地址
 这里不能够直接写主机地址或者127.0.0.1，主机地址需要额外开放端口，127则会映射到容器内对应端口。
 输入
+
 ```shell script
 ifconfig
 ```
+
 找到docker那一栏，inet后的地址就是我们需要的。
 
 #### 第二步：更改Nginx配置
+
 ```shell script
 vim /etc/nginx/nginx.conf
 ```
+
 修改以下部分即可。`172.17.0.1`为第一步找到的inet地址，端口号为由Docker启动的splash服务映射的端口。weight表示权重。
+
 ```text
  upstream spalsh {
             server 172.17.0.1:50000 weight=5;
