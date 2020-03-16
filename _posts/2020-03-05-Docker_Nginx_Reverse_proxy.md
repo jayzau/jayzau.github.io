@@ -21,19 +21,19 @@ tags: 博客
 
 搜索版本
 
-```shell script
+```shell
 docker search nginx
 ```
 
 下载镜像
 
-```shell script
+```shell
 docker pull nginx:latest
 ```
 
 创建容器并运行
 
-```shell script
+```shell
 docker run --name mynginx -p 8080:80  -v /etc/nginx/nginx.conf:/etc/nginx/nginx.conf  -v /etc/nginx/log:/var/log/nginx -d  --restart=always docker.io/nginx
 ```
 
@@ -52,7 +52,7 @@ docker run --name mynginx -p 8080:80  -v /etc/nginx/nginx.conf:/etc/nginx/nginx.
 这里不能够直接写主机地址或者127.0.0.1，主机地址需要额外开放端口，127则会映射到容器内对应端口。
 输入
 
-```shell script
+```shell
 ifconfig
 ```
 
@@ -60,7 +60,7 @@ ifconfig
 
 #### 第二步：更改Nginx配置
 
-```shell script
+```shell
 vim /etc/nginx/nginx.conf
 ```
 
