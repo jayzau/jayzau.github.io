@@ -7,6 +7,8 @@ tags: 博客
 
 每次弄新服务器装环境很烦，今天找到一个只需要一条命令的好方法。
 
+[琅琊福地](https://www.runoob.com/docker/ubuntu-docker-install.html)
+
 命令如下：
 
 ```shell script
