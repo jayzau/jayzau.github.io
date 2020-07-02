@@ -11,7 +11,7 @@ tags: 博客
 
 命令如下：
 
-```shell script
+```shell
 curl -sSL https://get.daocloud.io/docker | sh
 ```
 
@@ -22,7 +22,7 @@ curl -sSL https://get.daocloud.io/docker | sh
 
 源代码如下，空了再欣赏。
 
-```shell script
+```shell
 #!/bin/sh
 set -e
 # Docker CE for Linux installation script
