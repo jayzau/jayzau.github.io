@@ -21,7 +21,7 @@ tags: 博客
 
 下载`selenium`三方包。
 
-```python
+```shell
 pip install selenium
 ```
 
@@ -60,7 +60,7 @@ with webdriver.Chrome(executable_path="驱动绝对路径") as browser:
 
 安装`docker-compose`
 
-```python
+```shell
 pip install docker-compose
 ```
 
@@ -257,3 +257,7 @@ chrome_options.add_experimental_option('w3c', False)
 ---
 
 挺好的。
+
+如果能保持浏览器打开状态，每次请求可以复用的话，就更好了。
+
+再学学吧。
