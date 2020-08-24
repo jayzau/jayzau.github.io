@@ -2,7 +2,7 @@
 layout: post
 title: Python内置包Functools学习
 date: 2020-03-16
-tags: 博客   
+tags: 备忘录   
 ---
 
 # Functools
