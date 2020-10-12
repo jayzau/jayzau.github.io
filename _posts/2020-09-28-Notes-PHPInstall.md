@@ -61,3 +61,27 @@ ln -s /usr/local/php/bin/php /usr/bin/php
 暂时没弄懂是干嘛的。
 
 [朋友php7.4的安装过程](https://express.iefoam.com/detail?id=551&uId=zBRIkgKKSsGNMwtU8VriLVmpn2gdutzJ)带得有，以后用到了再写吧。
+
+
+---
+
+### 后续
+
+*关于`php-fpm`*
+
+个人理解`php-fpm`就是用来解析`php`脚本的。不做相关配置的话，`php`文件就仅仅只是个普通文件。
+
+*关于扩展安装*
+
+在编译安装`php`的参数选项步骤的时候就可以安装部分扩展。但是像`xdebug`扩展就不行，需要手动安装配置。
+
+[xdebug安装](https://xdebug.org/wizard)
+
+![xdebug安装过程](/images/posts/PHPInstall/xdebug_install.png)
+
+其实扩展安装都差不多，下包，解包，编译，安装，最后写入配置。
+
+不同的扩展写入的配置不太一样，比如`xdebug`最后写入的是`zend_extension = /usr/local/php/lib/php/extensions/no-debug-zts-20190902/xdebug.so`，而`redis`写入的是`extension = /usr/local/php/lib/php/extensions/no-debug-zts-20190902/redis.so`。
+
+变量名不知道有什么规律，看文档最好。后面指向的`so`文件路径一定要正确就是了。
+
