@@ -5,13 +5,13 @@ date: 2020-10-28
 tags: 备忘录   
 ---
 
+---
+
 ### XDebug 配置
 
 **前提是已经正常配置好PHP+Apache/Nginx,能从浏览器正常访问**
 
 **IDE为PHPStorm**
-
----
 
 复制`phpinfo()`页面信息到[xdebug安装](https://xdebug.org/wizard).
 
@@ -56,8 +56,6 @@ xdebug.profiler_output_name = cachegrind.out.%t.%p
 ### Blade Filters
 
 **基于`Laravel`框架的前端Blade模板,实现过滤器语法.**
-
----
 
 Github直达: [blade-filters](https://github.com/conedevelopment/blade-filters)
 
