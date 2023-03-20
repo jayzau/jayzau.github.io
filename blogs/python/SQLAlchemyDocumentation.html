@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>实现软删除 | Jayzau</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="好劲!">
+    
+    <link rel="preload" href="/assets/css/0.styles.c0542458.css" as="style"><link rel="preload" href="/assets/js/app.c5305ee3.js" as="script"><link rel="preload" href="/assets/js/2.2733607c.js" as="script"><link rel="preload" href="/assets/js/36.9293bf0b.js" as="script"><link rel="prefetch" href="/assets/js/10.ef8e919d.js"><link rel="prefetch" href="/assets/js/11.8ec9eea4.js"><link rel="prefetch" href="/assets/js/12.d902eacd.js"><link rel="prefetch" href="/assets/js/13.aec05fab.js"><link rel="prefetch" href="/assets/js/14.2805f5ea.js"><link rel="prefetch" href="/assets/js/15.8a264712.js"><link rel="prefetch" href="/assets/js/16.3b4138e0.js"><link rel="prefetch" href="/assets/js/17.eec3c406.js"><link rel="prefetch" href="/assets/js/18.25d28f03.js"><link rel="prefetch" href="/assets/js/19.090949aa.js"><link rel="prefetch" href="/assets/js/20.43c0a74c.js"><link rel="prefetch" href="/assets/js/21.f60ea17e.js"><link rel="prefetch" href="/assets/js/22.022efc2e.js"><link rel="prefetch" href="/assets/js/23.a3cee758.js"><link rel="prefetch" href="/assets/js/24.dfaf9b90.js"><link rel="prefetch" href="/assets/js/25.4bb80798.js"><link rel="prefetch" href="/assets/js/26.7dc791f1.js"><link rel="prefetch" href="/assets/js/27.b87628ec.js"><link rel="prefetch" href="/assets/js/28.b44871cc.js"><link rel="prefetch" href="/assets/js/29.ac371324.js"><link rel="prefetch" href="/assets/js/3.2241a300.js"><link rel="prefetch" href="/assets/js/30.c10170f6.js"><link rel="prefetch" href="/assets/js/31.ab3d6217.js"><link rel="prefetch" href="/assets/js/32.1e3fbc5c.js"><link rel="prefetch" href="/assets/js/33.13439f83.js"><link rel="prefetch" href="/assets/js/34.ee9bff09.js"><link rel="prefetch" href="/assets/js/35.b9fbcc7f.js"><link rel="prefetch" href="/assets/js/37.71f16844.js"><link rel="prefetch" href="/assets/js/38.2c1388e6.js"><link rel="prefetch" href="/assets/js/4.5a3a6bf8.js"><link rel="prefetch" href="/assets/js/5.aad4954c.js"><link rel="prefetch" href="/assets/js/6.20be021d.js"><link rel="prefetch" href="/assets/js/7.5a1615ac.js"><link rel="prefetch" href="/assets/js/8.4f988748.js"><link rel="prefetch" href="/assets/js/9.e5f1a567.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.c0542458.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Jayzau</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="博客" class="dropdown-title"><span class="title">博客</span> <span class="arrow down"></span></button> <button type="button" aria-label="博客" class="mobile-dropdown-title"><span class="title">博客</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blogs/notes/" class="nav-link">
+  笔记
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/python/" class="nav-link router-link-active">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/javascript/" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/php/" class="nav-link">
+  PHP
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/go/" class="nav-link">
+  Go
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/jayzau" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="博客" class="dropdown-title"><span class="title">博客</span> <span class="arrow down"></span></button> <button type="button" aria-label="博客" class="mobile-dropdown-title"><span class="title">博客</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blogs/notes/" class="nav-link">
+  笔记
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/python/" class="nav-link router-link-active">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/javascript/" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/php/" class="nav-link">
+  PHP
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/go/" class="nav-link">
+  Go
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/jayzau" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>实现软删除</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blogs/python/SQLAlchemyDocumentation.html#实现软删除" class="sidebar-link">实现软删除</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="实现软删除"><a href="#实现软删除" class="header-anchor">#</a> 实现软删除</h2> <h4 id="表结构"><a href="#表结构" class="header-anchor">#</a> 表结构：</h4> <div class="language-sql extra-class"><pre class="language-sql"><code><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>food_type<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+  <span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span> <span class="token keyword">COMMENT</span> <span class="token string">'自增id'</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">24</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'类型名称'</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>description<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">''</span> <span class="token keyword">COMMENT</span> <span class="token string">'描述'</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>created_time<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'0'</span> <span class="token keyword">COMMENT</span> <span class="token string">'添加时间'</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>updated_time<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'0'</span> <span class="token keyword">COMMENT</span> <span class="token string">'更新时间'</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>deleted_time<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'0'</span> <span class="token keyword">COMMENT</span> <span class="token string">'删除时间'</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb4<span class="token punctuation">;</span>
+
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>food_name<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+  <span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span> <span class="token keyword">COMMENT</span> <span class="token string">'自增id'</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>name<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">24</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span> <span class="token string">'类型名称'</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>description<span class="token punctuation">`</span></span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">''</span> <span class="token keyword">COMMENT</span> <span class="token string">'描述'</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>created_time<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'0'</span> <span class="token keyword">COMMENT</span> <span class="token string">'添加时间'</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>updated_time<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'0'</span> <span class="token keyword">COMMENT</span> <span class="token string">'更新时间'</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>deleted_time<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'0'</span> <span class="token keyword">COMMENT</span> <span class="token string">'删除时间'</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb4<span class="token punctuation">;</span>
+
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token identifier"><span class="token punctuation">`</span>food_type_name<span class="token punctuation">`</span></span> <span class="token punctuation">(</span>
+  <span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">AUTO_INCREMENT</span> <span class="token keyword">COMMENT</span> <span class="token string">'id'</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>food_type_id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token identifier"><span class="token punctuation">`</span>food_name_id<span class="token punctuation">`</span></span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span><span class="token punctuation">,</span>
+  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token punctuation">(</span><span class="token identifier"><span class="token punctuation">`</span>id<span class="token punctuation">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">ENGINE</span><span class="token operator">=</span><span class="token keyword">InnoDB</span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span><span class="token operator">=</span>utf8mb4<span class="token punctuation">;</span>
+</code></pre></div><h4 id="利用-sqlalchemy-event-实现软删除"><a href="#利用-sqlalchemy-event-实现软删除" class="header-anchor">#</a> 利用 <code>sqlalchemy.event</code> 实现软删除</h4> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> event<span class="token punctuation">,</span> ForeignKeyConstraint
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>sql <span class="token keyword">import</span> Select<span class="token punctuation">,</span> Delete
+<span class="token keyword">from</span> sqlalchemy<span class="token punctuation">.</span>util<span class="token punctuation">.</span>langhelpers <span class="token keyword">import</span> public_factory
+
+<span class="token comment"># 新增两个方法用于实现软删除以及查询软删除后的数据</span>
+<span class="token comment"># noinspection PyAbstractClass</span>
+<span class="token keyword">class</span> <span class="token class-name">SelectWithDeleted</span><span class="token punctuation">(</span>Select<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    select_deleted <span class="token operator">=</span> <span class="token boolean">True</span>
+    inherit_cache <span class="token operator">=</span> <span class="token boolean">True</span>
+
+<span class="token comment"># noinspection PyAbstractClass</span>
+<span class="token keyword">class</span> <span class="token class-name">SoftDelete</span><span class="token punctuation">(</span>Delete<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    is_soft_delete <span class="token operator">=</span> <span class="token boolean">True</span>
+
+<span class="token comment"># noinspection PyProtectedMember</span>
+select_with_deleted <span class="token operator">=</span> public_factory<span class="token punctuation">(</span>SelectWithDeleted<span class="token punctuation">.</span>_create<span class="token punctuation">,</span> <span class="token string">&quot;.sql.expression.delete&quot;</span><span class="token punctuation">)</span>
+soft_delete <span class="token operator">=</span> public_factory<span class="token punctuation">(</span>SoftDelete<span class="token punctuation">,</span> <span class="token string">&quot;.sql.expression.delete&quot;</span><span class="token punctuation">)</span>
+
+<span class="token decorator annotation punctuation">@event<span class="token punctuation">.</span>listens_for</span><span class="token punctuation">(</span>engine<span class="token punctuation">,</span> <span class="token string">'before_execute'</span><span class="token punctuation">,</span> retval<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">_before_execute</span><span class="token punctuation">(</span>conn<span class="token punctuation">,</span> clause_element<span class="token punctuation">,</span> multi_params<span class="token punctuation">,</span> params<span class="token punctuation">,</span> execution_options<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> clause_element<span class="token punctuation">.</span>is_insert<span class="token punctuation">:</span>
+        table <span class="token operator">=</span> clause_element<span class="token punctuation">.</span>table
+        t <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># 创建数据默认追加写入创建时间</span>
+        <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>table<span class="token punctuation">.</span>c<span class="token punctuation">,</span> <span class="token string">'created_time'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            clause_element <span class="token operator">=</span> clause_element<span class="token punctuation">.</span>values<span class="token punctuation">(</span><span class="token punctuation">{</span>table<span class="token punctuation">.</span>c<span class="token punctuation">.</span>created_time<span class="token punctuation">:</span> t<span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">elif</span> clause_element<span class="token punctuation">.</span>is_delete<span class="token punctuation">:</span>
+        table <span class="token operator">=</span> clause_element<span class="token punctuation">.</span>table
+        <span class="token comment"># 软删除 删除实际为执行为更新删除时间，没有时间字段默认不支持软删，执行原有删除逻辑</span>
+        <span class="token keyword">if</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>clause_element<span class="token punctuation">,</span> <span class="token string">'is_soft_delete'</span><span class="token punctuation">,</span> <span class="token boolean">False</span><span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>table<span class="token punctuation">.</span>c<span class="token punctuation">,</span> <span class="token string">'deleted_time'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            clause_element <span class="token operator">=</span> table<span class="token punctuation">.</span>update<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>where<span class="token punctuation">(</span>clause_element<span class="token punctuation">.</span>whereclause<span class="token punctuation">)</span>
+            clause_element <span class="token operator">=</span> clause_element<span class="token punctuation">.</span>where<span class="token punctuation">(</span>table<span class="token punctuation">.</span>c<span class="token punctuation">.</span>deleted_time <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            clause_element <span class="token operator">=</span> clause_element<span class="token punctuation">.</span>values<span class="token punctuation">(</span><span class="token punctuation">{</span>table<span class="token punctuation">.</span>c<span class="token punctuation">.</span>deleted_time<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token keyword">elif</span> clause_element<span class="token punctuation">.</span>is_update<span class="token punctuation">:</span>
+        table <span class="token operator">=</span> clause_element<span class="token punctuation">.</span>table
+        <span class="token comment"># 更新数据默认追加写入更新时间</span>
+        <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>table<span class="token punctuation">.</span>c<span class="token punctuation">,</span> <span class="token string">'updated_time'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            clause_element <span class="token operator">=</span> clause_element<span class="token punctuation">.</span>values<span class="token punctuation">(</span><span class="token punctuation">{</span>table<span class="token punctuation">.</span>c<span class="token punctuation">.</span>updated_time<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">(</span>time<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token comment"># 更新条件过滤掉被软删除的数据</span>
+        <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>table<span class="token punctuation">.</span>c<span class="token punctuation">,</span> <span class="token string">'deleted_time'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            clause_element <span class="token operator">=</span> clause_element<span class="token punctuation">.</span>where<span class="token punctuation">(</span>table<span class="token punctuation">.</span>c<span class="token punctuation">.</span>deleted_time <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">elif</span> clause_element<span class="token punctuation">.</span>is_select<span class="token punctuation">:</span>
+        <span class="token comment"># 原有 Select 不含 select_deleted 属性</span>
+        select_deleted <span class="token operator">=</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>clause_element<span class="token punctuation">,</span> <span class="token string">'select_deleted'</span><span class="token punctuation">,</span> <span class="token boolean">False</span><span class="token punctuation">)</span>
+        <span class="token comment"># 查询默认过滤掉被软删除后的数据</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> select_deleted<span class="token punctuation">:</span>
+            <span class="token keyword">for</span> table <span class="token keyword">in</span> clause_element<span class="token punctuation">.</span>columns_clause_froms<span class="token punctuation">:</span>
+                <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>table<span class="token punctuation">.</span>c<span class="token punctuation">,</span> <span class="token string">'deleted_time'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    clause_element <span class="token operator">=</span> clause_element<span class="token punctuation">.</span>where<span class="token punctuation">(</span>table<span class="token punctuation">.</span>c<span class="token punctuation">.</span>deleted_time <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> clause_element<span class="token punctuation">,</span> multi_params<span class="token punctuation">,</span> params
+</code></pre></div><h4 id="测试"><a href="#测试" class="header-anchor">#</a> 测试</h4> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment"># 连表</span>
+food_type <span class="token operator">=</span> Table<span class="token punctuation">(</span><span class="token string">'food_type'</span><span class="token punctuation">,</span> metadata<span class="token punctuation">,</span> autoload<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> autoload_with<span class="token operator">=</span>engine<span class="token punctuation">)</span>
+food_name <span class="token operator">=</span> Table<span class="token punctuation">(</span><span class="token string">'food_name'</span><span class="token punctuation">,</span> metadata<span class="token punctuation">,</span> autoload<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> autoload_with<span class="token operator">=</span>engine<span class="token punctuation">)</span>
+food_type_name <span class="token operator">=</span> Table<span class="token punctuation">(</span><span class="token string">'food_type_name'</span><span class="token punctuation">,</span> metadata<span class="token punctuation">,</span> autoload<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> autoload_with<span class="token operator">=</span>engine<span class="token punctuation">)</span>
+
+food_type<span class="token punctuation">.</span>append_constraint<span class="token punctuation">(</span>
+    ForeignKeyConstraint<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">'id'</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'food_type_name.food_type_id'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+food_name<span class="token punctuation">.</span>append_constraint<span class="token punctuation">(</span>
+    ForeignKeyConstraint<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">'id'</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'food_type_name.food_name_id'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+</code></pre></div><p>查询测试：</p> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment"># 清空所有数据</span>
+connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>delete<span class="token punctuation">(</span>food_type<span class="token punctuation">)</span><span class="token punctuation">)</span>
+connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>delete<span class="token punctuation">(</span>food_name<span class="token punctuation">)</span><span class="token punctuation">)</span>
+connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>delete<span class="token punctuation">(</span>food_type_name<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># 新增测试数据，不带任何时间参数</span>
+food_type_data <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span><span class="token string">'name'</span><span class="token punctuation">:</span> <span class="token string">'水果'</span><span class="token punctuation">,</span> <span class="token string">'description'</span><span class="token punctuation">:</span> <span class="token string">'水果，是指多汁且主要味觉为甜味和酸味，可食用的植物果实。'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'name'</span><span class="token punctuation">:</span> <span class="token string">'蔬菜'</span><span class="token punctuation">,</span> <span class="token string">'description'</span><span class="token punctuation">:</span> <span class="token string">'蔬菜(vegetables)是指可以做菜、烹饪成为食品的一类植物或菌类。'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'name'</span><span class="token punctuation">:</span> <span class="token string">'干货'</span><span class="token punctuation">,</span> <span class="token string">'description'</span><span class="token punctuation">:</span> <span class="token string">'干货是指去除了水分或水分较少的初级产品的统称。'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'name'</span><span class="token punctuation">:</span> <span class="token string">'肉类'</span><span class="token punctuation">,</span> <span class="token string">'description'</span><span class="token punctuation">:</span> <span class="token string">'肉类，是动物的皮下组织及肌肉，可以食用。'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'name'</span><span class="token punctuation">:</span> <span class="token string">'水产'</span><span class="token punctuation">,</span> <span class="token string">'description'</span><span class="token punctuation">:</span> <span class="token string">''</span><span class="token punctuation">}</span>
+<span class="token punctuation">]</span>
+food_name_data <span class="token operator">=</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span><span class="token string">'name'</span><span class="token punctuation">:</span> <span class="token string">'香蕉'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'name'</span><span class="token punctuation">:</span> <span class="token string">'苹果'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'name'</span><span class="token punctuation">:</span> <span class="token string">'西瓜'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'name'</span><span class="token punctuation">:</span> <span class="token string">'哈密瓜'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span><span class="token string">'name'</span><span class="token punctuation">:</span> <span class="token string">'脆瓜'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span>
+i <span class="token operator">=</span> insert<span class="token punctuation">(</span>food_type<span class="token punctuation">)</span>
+res <span class="token operator">=</span> connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>i<span class="token punctuation">,</span> food_type_data<span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">&quot;&quot;&quot;&lt;sqlalchemy.engine.cursor.LegacyCursorResult object at 0x7f7ee002c5d0&gt;&quot;&quot;&quot;</span>
+i <span class="token operator">=</span> insert<span class="token punctuation">(</span>food_name<span class="token punctuation">)</span>
+res <span class="token operator">=</span> connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>i<span class="token punctuation">,</span> food_name_data<span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">&quot;&quot;&quot;&lt;sqlalchemy.engine.cursor.LegacyCursorResult object at 0x7f7ee002cd50&gt;&quot;&quot;&quot;</span>
+
+<span class="token comment"># 查询数据</span>
+s <span class="token operator">=</span> select<span class="token punctuation">(</span>food_type<span class="token punctuation">)</span><span class="token punctuation">.</span>where<span class="token punctuation">(</span>food_type<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name <span class="token operator">==</span> <span class="token string">'水产'</span><span class="token punctuation">)</span>
+res <span class="token operator">=</span> connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+food_type_record <span class="token operator">=</span> res<span class="token punctuation">.</span>first<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">&quot;&quot;&quot;food_type_record: (5, '水产', '', 1679283322, 0, 0)&quot;&quot;&quot;</span>
+res <span class="token operator">=</span> connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>select<span class="token punctuation">(</span>food_name<span class="token punctuation">)</span><span class="token punctuation">)</span>
+food_name_records <span class="token operator">=</span> res<span class="token punctuation">.</span>fetchall<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">&quot;&quot;&quot; food_name_records:
+[
+    (1, '香蕉', '', 1679283322, 0, 0), 
+    (2, '苹果', '', 1679283322, 0, 0), 
+    (3, '西瓜', '', 1679283322, 0, 0), 
+    (4, '哈密瓜', '', 1679283322, 0, 0), 
+    (5, '脆瓜', '', 1679283322, 0, 0)
+]
+&quot;&quot;&quot;</span>
+<span class="token comment"># 查询结果已有写入时间</span>
+
+food_type_id <span class="token operator">=</span> connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>select<span class="token punctuation">(</span>food_type<span class="token punctuation">.</span>c<span class="token punctuation">.</span><span class="token builtin">id</span><span class="token punctuation">)</span><span class="token punctuation">.</span>where<span class="token punctuation">(</span>food_type<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name <span class="token operator">==</span> <span class="token string">'水果'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>scalar<span class="token punctuation">(</span><span class="token punctuation">)</span>
+data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> r <span class="token keyword">in</span> food_name_records<span class="token punctuation">:</span>
+    data<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">{</span>
+        <span class="token string">'food_type_id'</span><span class="token punctuation">:</span> food_type_id<span class="token punctuation">,</span>
+        <span class="token string">'food_name_id'</span><span class="token punctuation">:</span> r<span class="token punctuation">.</span><span class="token builtin">id</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>insert<span class="token punctuation">(</span>food_type_name<span class="token punctuation">)</span><span class="token punctuation">,</span> data<span class="token punctuation">)</span>
+
+<span class="token comment"># 更新数据，不带任何时间参数</span>
+u <span class="token operator">=</span> update<span class="token punctuation">(</span>food_type<span class="token punctuation">)</span><span class="token punctuation">.</span>where<span class="token punctuation">(</span>food_type<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name <span class="token operator">==</span> <span class="token string">'水产'</span><span class="token punctuation">)</span>
+u <span class="token operator">=</span> u<span class="token punctuation">.</span>values<span class="token punctuation">(</span><span class="token punctuation">{</span>food_type<span class="token punctuation">.</span>c<span class="token punctuation">.</span>description<span class="token punctuation">:</span> <span class="token string">'水产是指江、河、湖、海里出产的经济动、植物的统称。'</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+res <span class="token operator">=</span> connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>u<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">&quot;&quot;&quot;&lt;sqlalchemy.engine.cursor.LegacyCursorResult object at 0x7f7ef002c990&gt;&quot;&quot;&quot;</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>select<span class="token punctuation">(</span>food_type<span class="token punctuation">)</span><span class="token punctuation">.</span>where<span class="token punctuation">(</span>food_type<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name <span class="token operator">==</span> <span class="token string">'水产'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>first<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">&quot;&quot;&quot;(5, '水产', '水产是指江、河、湖、海里出产的经济动、植物的统称。', 1679283322, 1679283322, 0)&quot;&quot;&quot;</span>
+<span class="token comment"># 更新结果已自动带入了时间</span>
+
+<span class="token comment"># soft_delete 软删除数据</span>
+d <span class="token operator">=</span> soft_delete<span class="token punctuation">(</span>food_name<span class="token punctuation">)</span><span class="token punctuation">.</span>where<span class="token punctuation">(</span>food_name<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name<span class="token punctuation">.</span>like<span class="token punctuation">(</span><span class="token string">'%瓜'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+res <span class="token operator">=</span> connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>d<span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">&quot;&quot;&quot;&lt;sqlalchemy.engine.cursor.LegacyCursorResult object at 0x7f7ef003c950&gt;&quot;&quot;&quot;</span>
+<span class="token comment"># select 查询数据</span>
+s <span class="token operator">=</span> select<span class="token punctuation">(</span><span class="token punctuation">[</span>
+    food_type<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name<span class="token punctuation">.</span>label<span class="token punctuation">(</span><span class="token string">'food_type_name'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    food_name<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name<span class="token punctuation">.</span>label<span class="token punctuation">(</span><span class="token string">'food_name'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    food_name<span class="token punctuation">.</span>c<span class="token punctuation">.</span>deleted_time<span class="token punctuation">.</span>label<span class="token punctuation">(</span><span class="token string">'deleted_time'</span><span class="token punctuation">)</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+s <span class="token operator">=</span> s<span class="token punctuation">.</span>select_from<span class="token punctuation">(</span>food_type_name<span class="token punctuation">.</span>join<span class="token punctuation">(</span>food_type<span class="token punctuation">)</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>food_name<span class="token punctuation">)</span><span class="token punctuation">)</span>
+res <span class="token operator">=</span> connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+results <span class="token operator">=</span> res<span class="token punctuation">.</span>fetchall<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>results<span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">&quot;&quot;&quot;
+[
+    ('水果', '香蕉', 0), 
+    ('水果', '苹果', 0)
+]
+&quot;&quot;&quot;</span>
+<span class="token comment"># select 查询不到被软删的数据</span>
+
+<span class="token comment"># select_with_deleted 查询(包含软删除的数据)</span>
+s <span class="token operator">=</span> select_with_deleted<span class="token punctuation">(</span><span class="token punctuation">[</span>
+    food_type<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name<span class="token punctuation">.</span>label<span class="token punctuation">(</span><span class="token string">'food_type_name'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    food_name<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name<span class="token punctuation">.</span>label<span class="token punctuation">(</span><span class="token string">'food_name'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    food_name<span class="token punctuation">.</span>c<span class="token punctuation">.</span>deleted_time<span class="token punctuation">.</span>label<span class="token punctuation">(</span><span class="token string">'deleted_time'</span><span class="token punctuation">)</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+s <span class="token operator">=</span> s<span class="token punctuation">.</span>select_from<span class="token punctuation">(</span>food_type_name<span class="token punctuation">.</span>join<span class="token punctuation">(</span>food_type<span class="token punctuation">)</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>food_name<span class="token punctuation">)</span><span class="token punctuation">)</span>
+res <span class="token operator">=</span> connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+results <span class="token operator">=</span> res<span class="token punctuation">.</span>fetchall<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>results<span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">&quot;&quot;&quot;
+[
+    ('水果', '香蕉', 0), 
+    ('水果', '苹果', 0), 
+    ('水果', '西瓜', 1679283322), 
+    ('水果', '哈密瓜', 1679283322), 
+    ('水果', '脆瓜', 1679283322)
+]
+&quot;&quot;&quot;</span>
+<span class="token comment"># select_with_deleted 结果包含被软删的数据</span>
+
+<span class="token comment"># delete 删除数据</span>
+d <span class="token operator">=</span> delete<span class="token punctuation">(</span>food_name<span class="token punctuation">)</span><span class="token punctuation">.</span>where<span class="token punctuation">(</span>food_name<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name <span class="token operator">==</span> <span class="token string">'脆瓜'</span><span class="token punctuation">)</span>
+res <span class="token operator">=</span> connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>d<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">&quot;&quot;&quot;&lt;sqlalchemy.engine.cursor.LegacyCursorResult object at 0x7f7ef00483d0&gt;&quot;&quot;&quot;</span>
+
+<span class="token comment"># select_with_deleted 查询数据</span>
+s <span class="token operator">=</span> select_with_deleted<span class="token punctuation">(</span><span class="token punctuation">[</span>
+    food_type<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name<span class="token punctuation">.</span>label<span class="token punctuation">(</span><span class="token string">'food_type_name'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    food_name<span class="token punctuation">.</span>c<span class="token punctuation">.</span>name<span class="token punctuation">.</span>label<span class="token punctuation">(</span><span class="token string">'food_name'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    food_name<span class="token punctuation">.</span>c<span class="token punctuation">.</span>deleted_time<span class="token punctuation">.</span>label<span class="token punctuation">(</span><span class="token string">'deleted_time'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+s <span class="token operator">=</span> s<span class="token punctuation">.</span>select_from<span class="token punctuation">(</span>food_type_name<span class="token punctuation">.</span>join<span class="token punctuation">(</span>food_type<span class="token punctuation">)</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>food_name<span class="token punctuation">)</span><span class="token punctuation">)</span>
+res <span class="token operator">=</span> connection<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>s<span class="token punctuation">)</span>
+results <span class="token operator">=</span> res<span class="token punctuation">.</span>fetchall<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>results<span class="token punctuation">)</span>
+<span class="token triple-quoted-string string">&quot;&quot;&quot;
+[
+    ('水果', '香蕉', 0), 
+    ('水果', '苹果', 0), 
+    ('水果', '西瓜', 1679283322), 
+    ('水果', '哈密瓜', 1679283322)
+]
+&quot;&quot;&quot;</span>
+<span class="token comment"># 脆瓜相关数据已从数据库移除</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上一次编辑于:</span> <span class="time">3/20/2023, 2:18:03 PM</span></div></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.c5305ee3.js" defer></script><script src="/assets/js/2.2733607c.js" defer></script><script src="/assets/js/36.9293bf0b.js" defer></script>
+  </body>
+</html>

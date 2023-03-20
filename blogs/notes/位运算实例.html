@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>权限认证 | Jayzau</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="好劲!">
+    
+    <link rel="preload" href="/assets/css/0.styles.c0542458.css" as="style"><link rel="preload" href="/assets/js/app.c5305ee3.js" as="script"><link rel="preload" href="/assets/js/2.2733607c.js" as="script"><link rel="preload" href="/assets/js/28.b44871cc.js" as="script"><link rel="prefetch" href="/assets/js/10.ef8e919d.js"><link rel="prefetch" href="/assets/js/11.8ec9eea4.js"><link rel="prefetch" href="/assets/js/12.d902eacd.js"><link rel="prefetch" href="/assets/js/13.aec05fab.js"><link rel="prefetch" href="/assets/js/14.2805f5ea.js"><link rel="prefetch" href="/assets/js/15.8a264712.js"><link rel="prefetch" href="/assets/js/16.3b4138e0.js"><link rel="prefetch" href="/assets/js/17.eec3c406.js"><link rel="prefetch" href="/assets/js/18.25d28f03.js"><link rel="prefetch" href="/assets/js/19.090949aa.js"><link rel="prefetch" href="/assets/js/20.43c0a74c.js"><link rel="prefetch" href="/assets/js/21.f60ea17e.js"><link rel="prefetch" href="/assets/js/22.022efc2e.js"><link rel="prefetch" href="/assets/js/23.a3cee758.js"><link rel="prefetch" href="/assets/js/24.dfaf9b90.js"><link rel="prefetch" href="/assets/js/25.4bb80798.js"><link rel="prefetch" href="/assets/js/26.7dc791f1.js"><link rel="prefetch" href="/assets/js/27.b87628ec.js"><link rel="prefetch" href="/assets/js/29.ac371324.js"><link rel="prefetch" href="/assets/js/3.2241a300.js"><link rel="prefetch" href="/assets/js/30.c10170f6.js"><link rel="prefetch" href="/assets/js/31.ab3d6217.js"><link rel="prefetch" href="/assets/js/32.1e3fbc5c.js"><link rel="prefetch" href="/assets/js/33.13439f83.js"><link rel="prefetch" href="/assets/js/34.ee9bff09.js"><link rel="prefetch" href="/assets/js/35.b9fbcc7f.js"><link rel="prefetch" href="/assets/js/36.9293bf0b.js"><link rel="prefetch" href="/assets/js/37.71f16844.js"><link rel="prefetch" href="/assets/js/38.2c1388e6.js"><link rel="prefetch" href="/assets/js/4.5a3a6bf8.js"><link rel="prefetch" href="/assets/js/5.aad4954c.js"><link rel="prefetch" href="/assets/js/6.20be021d.js"><link rel="prefetch" href="/assets/js/7.5a1615ac.js"><link rel="prefetch" href="/assets/js/8.4f988748.js"><link rel="prefetch" href="/assets/js/9.e5f1a567.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.c0542458.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Jayzau</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="博客" class="dropdown-title"><span class="title">博客</span> <span class="arrow down"></span></button> <button type="button" aria-label="博客" class="mobile-dropdown-title"><span class="title">博客</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blogs/notes/" class="nav-link router-link-active">
+  笔记
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/javascript/" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/php/" class="nav-link">
+  PHP
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/go/" class="nav-link">
+  Go
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/jayzau" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="博客" class="dropdown-title"><span class="title">博客</span> <span class="arrow down"></span></button> <button type="button" aria-label="博客" class="mobile-dropdown-title"><span class="title">博客</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blogs/notes/" class="nav-link router-link-active">
+  笔记
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/javascript/" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/php/" class="nav-link">
+  PHP
+</a></li><li class="dropdown-item"><!----> <a href="/blogs/go/" class="nav-link">
+  Go
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/jayzau" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>权限认证</span> <!----></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h3 id="权限认证"><a href="#权限认证" class="header-anchor">#</a> 权限认证</h3> <p>假设需要验证用户的权限：</p> <ol><li>手机</li> <li>邮箱</li> <li>实名</li> <li>发帖</li> <li>评论</li> <li>...</li></ol> <p>设定用户初始权限：<code>0(0000 0000 0000 0000)</code></p> <table><thead><tr><th>权限</th> <th>值</th> <th>二进制</th></tr></thead> <tbody><tr><td>手机</td> <td>1</td> <td>0000 0000 0000 0001</td></tr> <tr><td>邮箱</td> <td>2</td> <td>0000 0000 0000 0010</td></tr> <tr><td>实名</td> <td>4</td> <td>0000 0000 0000 0100</td></tr> <tr><td>发帖</td> <td>8</td> <td>0000 0000 0000 1000</td></tr> <tr><td>评论</td> <td>16</td> <td>0000 0000 0001 0000</td></tr> <tr><td>...</td> <td>32</td> <td>0000 0000 0010 0000</td></tr></tbody></table> <h5 id="权限计算"><a href="#权限计算" class="header-anchor">#</a> 权限计算</h5> <div class="language-python extra-class"><pre class="language-python"><code><span class="token keyword">class</span> <span class="token class-name">Permissions</span><span class="token punctuation">:</span>
+    phone <span class="token operator">=</span> <span class="token number">1</span>
+    email <span class="token operator">=</span> <span class="token number">2</span>
+    authentication <span class="token operator">=</span> <span class="token number">4</span>
+    post <span class="token operator">=</span> <span class="token number">8</span>
+    comment <span class="token operator">=</span> <span class="token number">16</span>
+
+<span class="token keyword">def</span> <span class="token function">verify_permission</span><span class="token punctuation">(</span>state<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">,</span> permission<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">&quot;&quot;&quot; 按位与 &amp;: 相同位的两个数字都为1，则为1；若有一个不为1，则为0。
+      0000 0000 0000 0001
+    &amp; 0000 0000 0000 0110
+    ---------------------
+      0000 0000 0000 0000
+    &quot;&quot;&quot;</span>
+    <span class="token keyword">return</span> <span class="token builtin">bool</span><span class="token punctuation">(</span>state <span class="token operator">&amp;</span> permission<span class="token punctuation">)</span>
+    
+<span class="token keyword">def</span> <span class="token function">add_permission</span><span class="token punctuation">(</span>state<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">,</span> permission<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> verify_permission<span class="token punctuation">(</span>state<span class="token punctuation">,</span> permission<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> state
+    <span class="token triple-quoted-string string">&quot;&quot;&quot;按位或 |: 相同位只要一个为1即为1。
+      0000 0000 0000 0001
+    | 0000 0000 0000 0110
+    ---------------------
+      0000 0000 0000 0111
+    &quot;&quot;&quot;</span>
+    <span class="token keyword">return</span> state <span class="token operator">|</span> permission
+
+<span class="token keyword">def</span> <span class="token function">del_permission</span><span class="token punctuation">(</span>state<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">,</span> permission<span class="token punctuation">:</span> <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> verify_permission<span class="token punctuation">(</span>state<span class="token punctuation">,</span> permission<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token triple-quoted-string string">&quot;&quot;&quot;按位异或 ^: 相同位不同则为1，相同则为0。
+          0000 0000 0000 0001
+        ^ 0000 0000 0000 0101
+        ---------------------
+          0000 0000 0000 0100
+        &quot;&quot;&quot;</span>
+        <span class="token keyword">return</span> state <span class="token operator">^</span> permission
+    <span class="token keyword">return</span> state
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">&quot;__main__&quot;</span><span class="token punctuation">:</span>
+    user_permission <span class="token operator">=</span> <span class="token number">0</span>
+    user_permission <span class="token operator">=</span> add_permission<span class="token punctuation">(</span>user_permission<span class="token punctuation">,</span> Permissions<span class="token punctuation">.</span>phone<span class="token punctuation">)</span>
+    <span class="token comment"># &gt;&gt;&gt; add_permission(0, 1) &gt;&gt;&gt; 0 | 1 &gt;&gt;&gt; 1</span>
+    user_permission <span class="token operator">=</span> add_permission<span class="token punctuation">(</span>user_permission<span class="token punctuation">,</span> Permissions<span class="token punctuation">.</span>email<span class="token punctuation">)</span>
+    <span class="token comment"># &gt;&gt;&gt; add_permission(1, 2) &gt;&gt;&gt; 1 | 2 &gt;&gt;&gt; 3</span>
+    user_permission <span class="token operator">=</span> del_permission<span class="token punctuation">(</span>user_permission<span class="token punctuation">,</span> Permissions<span class="token punctuation">.</span>phone<span class="token punctuation">)</span>
+    <span class="token comment"># &gt;&gt;&gt; del_permission(3, 1) &gt;&gt;&gt; 3 ^ 1 &gt;&gt;&gt; 2</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上一次编辑于:</span> <span class="time">1/27/2021, 11:25:36 AM</span></div></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.c5305ee3.js" defer></script><script src="/assets/js/2.2733607c.js" defer></script><script src="/assets/js/28.b44871cc.js" defer></script>
+  </body>
+</html>
